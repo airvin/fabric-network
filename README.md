@@ -24,3 +24,9 @@ peer chaincode install -n mycc -v v0 -l node -p /opt/gopath/src/chaincodedev/cha
 peer chaincode list --installed
 peer chaincode instantiate -n mycc -v v0 -l node -c '{"Args":["init","a","100","b","200"]}' -C myc -o orderer:7050
 ```
+
+Chaincode can be invoked with:
+
+```
+peer chaincode invoke -n mycc -c '{"Args":["invoke","a","b","30"]}' -C myc
+```
