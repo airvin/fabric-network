@@ -83,3 +83,25 @@ Query:
 peer chaincode query -n mycc -c '{"Args":["query","a"}' -C myc
 ```
 
+### Notes on Running the Chaincode Process Locally
+
+In this setup there is no need to run the chaincode container, but we will be hosting the process that implements the chaincode on our host machine. The only change we need to do is to make port 7052 of the peer accessible from outside the docker-compose network created for the fabric deployment. To do that it is sufficient to add the mapping: `- 7052:7052` under the ports section of the `peer` container in the `docker-compose.yaml`.
+
+#### Node Chaincode
+
+The current version of the `fabric_shim` package requires an older version of node to be compiled successfully. To do that we will be using the [n](https://github.com/tj/n) verions manager. 
+
+With the fabric network running do the following:
+
+```
+# npm install n
+sudo n 8.9.0
+cd chaincode/chaincode_example02/node
+npm install
+node chaincode_example02.js --peer.address localhost:7052 --chaincode-id-name "mycc:v0"
+```
+
+#### Go Chaincode
+
+*TO BE DONE*
+
