@@ -8,6 +8,12 @@ To start the nodes and join the peer to the channel `myc`, run:
 ./start.sh
 ```
 
+or, to run without the chaincode container (for local dev):
+
+```
+./start-no-cc.sh
+```
+
 ### Chaincode Setup - Chaincode Container
 
 Then to start the chaincode in development mode, use the following:
@@ -30,7 +36,7 @@ go build -o example02
 CORE_CHAINCODE_LOGGING_LEVEL=debug CORE_PEER_ADDRESS=peer:7052 CORE_CHAINCODE_ID_NAME=mycc:v0 ./example02
 ```
 
-### Chaincode Testing - CLI Container 
+### Chaincode Testing - CLI Container
 
 
 In a separate terminal window, run:
@@ -89,7 +95,7 @@ In this setup there is no need to run the chaincode container, but we will be ho
 
 #### Node Chaincode
 
-The current version of the `fabric_shim` package requires an older version of node to be compiled successfully. To do that we will be using the [n](https://github.com/tj/n) verions manager. 
+The current version of the `fabric_shim` package requires an older version of node to be compiled successfully. To do that we will be using the [n](https://github.com/tj/n) verions manager.
 
 With the fabric network running do the following:
 
@@ -104,4 +110,3 @@ node chaincode_example02.js --peer.address localhost:7052 --chaincode-id-name "m
 #### Go Chaincode
 
 *TO BE DONE*
-
