@@ -29,7 +29,7 @@ services:
       - CORE_PEER_GOSSIP_EXTERNALENDPOINT=peer:7051
       - CORE_PEER_LOCALMSPID=DEFAULT
       - CORE_VM_ENDPOINT=unix:///host/var/run/docker.sock
-      - FABRIC_LOGGING_SPEC=info
+      - FABRIC_LOGGING_SPEC=debug
       - CORE_PEER_MSPCONFIGPATH=/etc/hyperledger/msp
     volumes:
       - /var/run/:/host/var/run/

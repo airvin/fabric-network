@@ -109,4 +109,8 @@ node chaincode_example02.js --peer.address localhost:7052 --chaincode-id-name "m
 
 #### Go Chaincode
 
-*TO BE DONE*
+```
+cd chaincode/chaincode_example02/go
+go build -o example02
+CORE_CHAINCODE_LOGGING_LEVEL=debug CORE_PEER_ADDRESS=localhost:7052 CORE_CHAINCODE_ID_NAME=mycc:v0 ./example02
+```
