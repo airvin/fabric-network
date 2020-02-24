@@ -1,6 +1,6 @@
 # Fabric network
 
-This is a very simple Fabric network consists of an orderer, peer, cli and chaincode container.
+This is a very simple Fabric network that consists of an orderer, peer, cli and chaincode container.
 
 To start the nodes and join the peer to the channel `myc`, run:
 
