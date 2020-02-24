@@ -1,6 +1,6 @@
 # Fabric network
 
-This Fabric network consists of an orderer, peer, cli and chaincode container.
+This is a very simple Fabric network consists of an orderer, peer, cli and chaincode container.
 
 To start the nodes and join the peer to the channel `myc`, run:
 
@@ -8,7 +8,7 @@ To start the nodes and join the peer to the channel `myc`, run:
 ./start.sh
 ```
 
-or, to run without the chaincode container (for local dev):
+or, to run without the chaincode container (for local development):
 
 ```
 ./start-no-cc.sh
@@ -16,16 +16,17 @@ or, to run without the chaincode container (for local dev):
 
 ## Running the Chaincode Process Locally
 
-In this setup there is no need to run the chaincode container, but we will be hosting the process that implements the chaincode on our host machine.
-The only change we need to do is to make port 7052 of the peer accessible from outside the docker-compose network created for the fabric deployment.
-To do that it is sufficient to add the mapping: `- 7052:7052` under the ports section of the `peer` container in the `docker-compose.yaml`.
+In this setup there is no need to run the chaincode container.
+Instead, the chaincode process will be run on our host machine.
+The only change needed is to make port 7052 of the peer accessible from outside the docker-compose network created for the Fabric deployment.
+To do this, the mapping: `- 7052:7052` is added under the ports section of the `peer` container in the `docker-compose.yaml`.
 
 ### Node Chaincode
 
 The current version of the `fabric_shim` package requires an older version of node to be compiled successfully.
 To do that we will be using the [n](https://github.com/tj/n) version manager.
 
-With the fabric network running do the following:
+With the Fabric network running do the following:
 
 ```
 # npm install n
@@ -45,7 +46,7 @@ CORE_CHAINCODE_LOGGING_LEVEL=debug CORE_PEER_ADDRESS=localhost:7052 CORE_CHAINCO
 
 ### Haskell Chaincode
 
-This requires building and running the Haskell chaincode process from the [haskell-cc](https://github.ibm.com/chaincode-haskell/haskell-cc) repository.
+This requires building and running the Haskell chaincode process from the [haskell-cc](https://github.com/nwaywood/haskell-cc) repository.
 Instructions for doing so can be found in the repository's readme.
 
 ## Chaincode Testing - CLI Container
@@ -110,19 +111,15 @@ Instantiation:
 docker exec -it cli bash
 peer chaincode install -n mycc -v v0 -l golang -p chaincodedev/chaincode/chaincode_example02/go
 peer chaincode list --installed
-peer chaincode instantiate -n mycc -v v0 -l golang -c '{"Args":["init","a","100","b","200"]}' -C myc -o orderer:7050
+peer chaincode instantiate -n mycc -v v0 -l golang -c '{"Args":["init","a","100"]}' -C myc -o orderer:7050
 ```
 
 Invocation:
 
 ```
-peer chaincode invoke -n mycc -c '{"Args":["invoke","a","b","30"]}' -C myc
-```
-
-Query:
-
-```
-peer chaincode query -n mycc -c '{"Args":["query","a"}' -C myc
+peer chaincode invoke -n mycc -c '{"Args":["get","a"]}' -C myc
+peer chaincode invoke -n mycc -c '{"Args":["set","b","60"]}' -C myc
+peer chaincode invoke -n mycc -c '{"Args":["del","a"]}' -C myc
 ```
 
 ## Chaincode Setup - Chaincode Container
